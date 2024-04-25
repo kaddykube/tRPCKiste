@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { trpc } from '$lib/trpc/client';
+	import { client } from '$lib/trpc/client';
 	import { onMount } from 'svelte';
 
-	let greeting = 'load data';
-
+	let greeting = {message : ''};
+	
 	onMount(async () => {
-		greeting = await trpc().greeting.query();
+		//greeting = await client.greeting.query();
+		greeting = {message : 'error'};
 	});
 </script>
-
-<p>{greeting}</p>
+<p>{greeting?.message}</p>

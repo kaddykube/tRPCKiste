@@ -5,7 +5,7 @@ export const t = initTRPC.context<Context>().create();
 
 export const router = t.router({
   greeting: t.procedure.query(async () => {
-    return `Hello World - ${new Date().toLocaleTimeString()}`;
+    return {message: 'hello world'};
   })
 });
 
