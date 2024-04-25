@@ -1,2 +1,12 @@
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script lang="ts">
+	import { trpc } from '$lib/trpc/client';
+	import { onMount } from 'svelte';
+
+	let greeting = 'load data';
+
+	onMount(async () => {
+		greeting = await trpc().greeting.query();
+	});
+</script>
+
+<p>{greeting}</p>
