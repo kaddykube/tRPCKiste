@@ -3,7 +3,7 @@
 	import { onMount } from 'svelte';
 	let hello: string;
 
-	onMount(async() => { await client.hello.hello.query({name: 'name'}) });
+	onMount(async() => { hello = await client.hello.hello.query({name: 'Haus'}) });
 </script>
 
 <p>{hello}</p>
