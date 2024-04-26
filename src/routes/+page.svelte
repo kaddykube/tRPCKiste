@@ -1,12 +1,22 @@
 <script lang="ts">
-	import { client } from '$lib/trpc/client';
+	/**VIA 
+	 * https://raqueebuddinaziz.com/blog/how-to-setup-trpc-in-a-sveltekit-project/ 
+	 * erstellt
+	 * */
+	import { browser } from '$app/environment';
+	import { trpc } from '$lib/trpc';
 	import { onMount } from 'svelte';
 
-	let greeting = {message : ''};
-	
-	onMount(async () => {
-		//greeting = await client.greeting.query();
-		greeting = {message : 'error'};
-	});
+	let name: string;
+	let output: string;
+	let hey: string;
+
+	$: if (browser) {
+		name && trpc.greet.query({ name }).then((value) => (output = value));}
+
+	onMount(async() => { trpc.hello.query().then((value) => (hey = value)); });
 </script>
-<p>{greeting?.message}</p>
+
+<input bind:value={name} />
+<p>{output}</p>
+<p>{hey}</p>
