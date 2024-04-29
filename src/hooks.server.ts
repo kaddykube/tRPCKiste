@@ -3,19 +3,13 @@ import { sequence } from '@sveltejs/kit/hooks';
 import { createTRPCHandle } from '$lib/trpc/handle';
 import { createContext } from '$lib/trpc/context';
 import type { Handle } from '@sveltejs/kit';
+import { parseAuthorizationCookie } from '$lib/server/cookies';
 
-
-
-
-const auth: Handle = async ({ event, resolve }) => {
-    
-    // über page (client) user neu setzen ->  user = await methode 
-    // trpc / store läuft serverseitig page store aber client 
-
-    const user = 'userName';
+const login: Handle = async ({ event, resolve }) => {
+    const user = await parseAuthorizationCookie(event.cookies);
 
     if (user) {
-        event.locals = {
+        event.locals.session = {
             user: user,
         };
     }
@@ -25,4 +19,5 @@ const auth: Handle = async ({ event, resolve }) => {
 
 const trpc: Handle = createTRPCHandle({ router, createContext });
 
-export const handle = sequence(auth, trpc);
+export const handle = sequence(login, trpc);
+
