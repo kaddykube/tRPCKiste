@@ -13,9 +13,10 @@ export const signInRouter = trpc.router({
 			const { name, password } = req.input;
 			const user = { name: 'user', password: '123' };
 			if (name == user.name && password == user.password) {
-				return true;
+                const token = 'name' + '0000';
+                return token;
 			} else {
-				return false;
+				return null;
 			}
 		})
 });

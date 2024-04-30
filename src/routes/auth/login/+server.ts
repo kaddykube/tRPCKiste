@@ -26,7 +26,7 @@ export async function POST(event: RequestEvent) {
     }
 
     
-    setAuthorizationCookie(cookies, '0000');
+    setAuthorizationCookie(cookies, isValid);
 
     return new Response(null, { status: 200 });
 }
