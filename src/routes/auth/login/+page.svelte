@@ -7,7 +7,7 @@
 	let loginFailed = false;
 
 	async function login() {
-		const response = await fetch('/login', {
+		const response = await fetch('/auth/login', {
 			method: 'POST',
 			body: JSON.stringify({
 				name: username,
@@ -15,7 +15,7 @@
 			})
 		});
 		if (response.status === 200) {
-			goto('/');
+			goto('/home');
 		} else {
 			loginFailed = true;
 		}

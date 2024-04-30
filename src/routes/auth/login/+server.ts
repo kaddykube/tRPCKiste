@@ -1,6 +1,6 @@
 import { error, type RequestEvent } from '@sveltejs/kit';
 import { setAuthorizationCookie } from '$lib/server/cookies/index.js';
-import { checkUser } from '../utils';
+import { checkUser } from '../../utils';
 
 export async function POST(event: RequestEvent) {
     const { request, cookies } = event;

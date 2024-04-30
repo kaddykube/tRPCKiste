@@ -8,6 +8,6 @@ export async function POST(event: RequestEvent) {
 
     locals.session = undefined;
 
-    redirect(307, '/login');
+    redirect(307, '/auth/login');
 
 }
