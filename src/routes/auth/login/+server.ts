@@ -1,20 +1,31 @@
 import { error, type RequestEvent } from '@sveltejs/kit';
 import { setAuthorizationCookie } from '$lib/server/cookies/index.js';
-import { checkUser } from '../../utils';
+import { createContext } from '$lib/trpc/context';
+import { trpc } from '$lib/trpc/trpc';
+import { router } from '$lib/trpc/router';
 
 export async function POST(event: RequestEvent) {
     const { request, cookies } = event;
+    
+    const ctx = await createContext(event);
+    const createCaller = trpc.createCallerFactory(router);
+    const caller = createCaller(ctx);
 
     const { name, password } = await request.json();
 
-    const setTokenValid = checkUser(name, password);
 
-    if (!setTokenValid) {
+   const isValid = await caller.signIn.checkUser({
+        name,
+        password,
+    }); 
+
+    if (!isValid) {
         throw error(403, {
             message: 'Forbidden',
         });
     }
 
+    
     setAuthorizationCookie(cookies, '0000');
 
     return new Response(null, { status: 200 });

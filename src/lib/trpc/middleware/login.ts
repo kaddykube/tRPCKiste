@@ -3,9 +3,11 @@ import { TRPCError } from '@trpc/server';
 
 const isLoggedIn = trpc.middleware(async ({ ctx, next }) => {
 
-    const { user} = ctx;
+    const { user } = ctx;
 
-    if (user === null) {
+    console.log('user ', user);
+
+    if (user === null ) {
         throw new TRPCError({ code: 'UNAUTHORIZED' });
     }
 
