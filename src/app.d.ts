@@ -5,7 +5,7 @@ declare global {
 		interface Locals {
             session?: {
                 user: {
-                    id: string;
+                    name: string;
                 };
             };
         }

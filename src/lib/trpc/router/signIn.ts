@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { trpc } from '$lib/trpc/trpc';
+import { createAccessToken } from '$lib/server/jwt';
 
 export const signInRouter = trpc.router({
 	checkUser: trpc.procedure
@@ -13,7 +14,9 @@ export const signInRouter = trpc.router({
 			const { name, password } = req.input;
 			const user = { name: 'user', password: '123' };
 			if (name == user.name && password == user.password) {
-                const token = 'name' + '0000';
+                const  token = createAccessToken({
+                    name: user.name
+                });
                 return token;
 			} else {
 				return null;
